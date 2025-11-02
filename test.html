@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Heroes - charity:water Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -22,11 +22,11 @@
             </div>
             <div class="branding-overlay">
                 <div class="logo">
-                    <div class="charity-water-logo-container">
-                        <!-- changed to use local horizontal logo file -->
-                        <img src="cw_logo_horizontal.png" alt="charity:water logo" class="charity-water-logo-img">
-                        <h1 class="charity-water-logo-text">charity:water</h1>
+                    <div class="jerry-can-logo">
+                        <div class="jerry-can-icon">🪣</div>
+                        <div class="jerry-can-label">WATER</div>
                     </div>
+                    <h1 class="charity-water-logo">charity:water</h1>
                     <p class="tagline">bringing clean water to every person on the planet</p>
                 </div>
                 <div class="game-title">
@@ -45,7 +45,7 @@
     <div id="country-selection" class="screen">
         <div class="country-header">
             <h1>Choose Your Mission Location</h1>
-            <p>Scroll through countries that need clean water</p>
+            <p>Scroll through regions that need clean water</p>
         </div>
         <div class="country-carousel-container">
             <button class="carousel-nav prev" id="prev-country">‹</button>
@@ -120,9 +120,7 @@
             </div>
         </div>
         <div id="game-container" class="game-container">
-            <!-- Game content will be loaded here -->
-            <!-- Add the Pac-Man canvas where the game draws -->
-            <canvas id="pacman-canvas" width="640" height="480" style="max-width:100%; border-radius: 12px; background:#0b1220;"></canvas>
+            <!-- Game content will be loaded here --
         </div>
         <div class="game-controls">
             <button id="reset-game" class="control-button">Reset</button>
@@ -192,9 +190,8 @@
         </div>
     </div>
 
-    <!-- load data and utilities first, then the UI script -->
-    <script src="countries.js"></script>
-    <script src="game.js"></script>
-    <script src="script.js"></script>
+    <script src="js/countries.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

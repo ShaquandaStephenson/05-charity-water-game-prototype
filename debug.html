@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Heroes - Debug Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 20px; font-family: Arial, sans-serif; }
+        .debug-info { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .country-card { border: 1px solid #ccc; padding: 10px; margin: 5px; cursor: pointer; }
+        .country-card.locked { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <h1>Water Heroes Debug Test</h1>
+    
+    <div class="debug-info">
+        <h3>Debug Information:</h3>
+        <div id="debug-output"></div>
+    </div>
+
+    <div id="country-selection" class="screen active">
+        <h2>Select Continent</h2>
+        <div id="country-track" style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <!-- Countries will be populated here -->
+        </div>
+        <div class="score-display">
+            <div class="score-item">
+                <span class="score-label">Total Impact:</span>
+                <span id="total-score" class="score-value">0</span>
+            </div>
+            <div class="score-item">
+                <span class="score-label">Communities Helped:</span>
+                <span id="communities-helped" class="score-value">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple debug version of countries data
+        const countries = [
+            {
+                id: 'asia',
+                name: 'Asia',
+                flag: '🌏',
+                description: 'Rural villages struggle with water scarcity and contamination',
+                population: '1,380',
+                withoutWater: '6 hours',
+                waitTime: '4 hours',
+                missionText: 'A new drought has been identified in rural Asia. 1,380 people need your help to bring clean water to their community.',
+                gameType: 'pacman',
+                levels: 5
+            },
+            {
+                id: 'africa',
+                name: 'Africa',
+                flag: '🌍',
+                description: 'Remote communities need sustainable water solutions',
+                population: '850',
+                withoutWater: '8 months',
+                waitTime: '6 hours',
+                missionText: 'In East Africa, 850 people have been without reliable water for 8 months.',
+                gameType: 'puzzle',
+                levels: 4
+            },
+            {
+                id: 'centralamerica',
+                name: 'Central America',
+                flag: '🌎',
+                description: 'Rural communities face seasonal water shortages',
+                population: '2,100',
+                withoutWater: '1 year',
+                waitTime: '3 hours',
+                missionText: 'Central American communities house 2,100 people who have been without reliable water access.',
+                gameType: 'matching',
+                levels: 3
+            },
+            {
+                id: 'southamerica',
+                name: 'South America',
+                flag: '🌎',
+                description: 'Indigenous communities need clean water infrastructure',
+                population: '1,200',
+                withoutWater: '3 years',
+                waitTime: '5 hours',
+                missionText: 'In remote South American regions, 1,200 indigenous people have been drinking contaminated water.',
+                gameType: 'clicker',
+                levels: 5
+            }
+        ];
+
+        let playerData = {
+            totalScore: 0,
+            communitiesHelped: 0,
+            currentCountry: null,
+            currentLevel: 1,
+            unlockedCountries: ['asia'], // Start with Asia unlocked
+            completedLevels: {},
+            lives: 3
+        };
+
+        function debug(message) {
+            document.getElementById('debug-output').innerHTML += '<div>' + message + '</div>';
+        }
+
+        function renderCountries() {
+            const track = document.getElementById('country-track');
+            track.innerHTML = '';
+            
+            debug('Rendering ' + countries.length + ' countries');
+            
+            countries.forEach((country, index) => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
+                card.dataset.countryId = country.id;
+                
+                const isUnlocked = playerData.unlockedCountries.includes(country.id);
+                
+                card.innerHTML = `
+                    <div class="country-flag">${country.flag}</div>
+                    <div class="country-name">${country.name}</div>
+                    <div class="country-description">${country.description}</div>
+                    <div class="country-stats">
+                        <div class="stat-chip">${country.levels} Levels</div>
+                        <div class="stat-chip">${isUnlocked ? 'Available' : 'Locked'}</div>
+                    </div>
+                `;
+
+                if (isUnlocked) {
+                    card.addEventListener('click', () => selectCountry(country));
+                    debug('Added click listener to ' + country.name);
+                } else {
+                    card.classList.add('locked');
+                    card.style.cursor = 'not-allowed';
+                    debug(country.name + ' is locked');
+                }
+
+                track.appendChild(card);
+            });
+            
+            debug('Finished rendering countries');
+        }
+
+        function selectCountry(country) {
+            debug('Selected country: ' + country.name);
+            playerData.currentCountry = country;
+            alert('You selected ' + country.name + '! Mission: ' + country.missionText);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            debug('DOM loaded, initializing...');
+            renderCountries();
+            debug('Initialization complete');
+        });
+    </script>
+</body>
+</html>
